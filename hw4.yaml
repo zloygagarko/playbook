@@ -1,0 +1,27 @@
+---
+- name: Connect to Amazon Linux and Ubuntu servers
+  hosts: all
+  remote_user: "{{ ansible_user }}"
+  vars:
+    - last_name: "Samozhenov"
+
+  tasks:
+    - name: Copy file 
+      ansible.builtin.copy:
+        src: /tmp/names.txt
+        dest: /tmp
+    - name: Adding content in a file
+      ansible.builtin.copy:
+        content: Dan Brestt Liz Arun
+        dest: /tmp/names.txt
+    - name: Replace 'Liz' with 'elizabeth' in a file
+      lineinfile:
+        path: /tmp/names.txt
+        backrefs: yes
+        regexp: '(^.*\s)Liz(\s.*$)'
+        line: '\1elizabeth\2'
+    - name: Adding my second name in a file
+      lineinfile:
+        path: /tmp/names.txt
+        line: "{{ last_name }}"
+        insertafter: EOF

@@ -1,0 +1,44 @@
+---
+- name: Connect to Amazon Linux and Ubuntu servers
+  hosts: all
+  remote_user: "{{ ansible_user }}"
+
+  tasks:
+    - name: Ensure the latest packages are installed
+      become: true
+      become_method: sudo
+      become_user: root
+      dnf:
+        name: '*'
+        state: latest
+      when: ansible_os_family == 'RedHat'  # Condition for Amazon Linux
+
+    - name: Ensure the latest packages are installed
+      become: yes
+      apt:
+        upgrade: yes
+      when: ansible_os_family == 'Debian'  # Condition for Ubuntu
+  
+    - name: install aplications
+      become: true
+      become_method: sudo
+      become_user: root
+      dnf:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - httpd
+        # - mssql-server
+        - nodejs
+      when: ansible_os_family == 'RedHat'
+
+    - name: install aplications   # name of the playwh
+      become: yes
+      apt:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - apache2
+        - mysql-server
+        - nodejs
+      when: ansible_os_family == 'Debian'
