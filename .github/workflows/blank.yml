@@ -42,3 +42,8 @@ jobs:
     - name: Run Ansible Playbook
       run: |
         ansible-playbook -i inventory hw3.yaml --ssh-common-args='-o StrictHostKeyChecking=no'
+
+      
+    - name: Run Ansible Playbook
+      run: |
+        ansible-playbook -i inventory hw4.yaml --ssh-common-args='-o StrictHostKeyChecking=no'
