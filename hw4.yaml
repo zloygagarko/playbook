@@ -6,10 +6,6 @@
     - last_name: "Samozhenov"
 
   tasks:
-    - name: Copy file 
-      ansible.builtin.copy:
-        src: /tmp/names.txt
-        dest: /tmp
     - name: Adding content in a file
       ansible.builtin.copy:
         content: Dan Brestt Liz Arun
